@@ -1,6 +1,10 @@
 "use client";
+import {CountrySelectField} from "@/components/forms/CountrySelectField";
+import FooterLink from "@/components/forms/FooterLink";
 import InputField from "@/components/forms/InputField";
+import SelectField from "@/components/SelectField";
 import { Button } from "@/components/ui/button";
+import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS } from "@/lib/constants";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -46,7 +50,7 @@ const SignUpPage = () => {
         <InputField
           name="email"
           label="Email"
-          placeholder="contact@jsmastery.com"
+          placeholder="@example.com"
           register={register}
           error={errors.email}
           validation={{
@@ -65,6 +69,45 @@ const SignUpPage = () => {
           error={errors.password}
           validation={{ required: "Password is required", minLength: 8 }}
         />
+
+        <CountrySelectField
+          name="country"
+          label="Country"
+          control={control}
+          error={errors.country}
+          required
+        />
+
+        <SelectField 
+          name="investmentGoals"
+          label = "Investment Goals"
+          placeholder="Select your investment goals"
+          options = {INVESTMENT_GOALS}
+          control={control}
+          error={errors.investmentGoals}
+          required 
+        
+        />
+        <SelectField 
+          name="riskTolerance"
+          label = "Risk Tolerance"
+          placeholder="Select your risk tolerance"
+          options = {RISK_TOLERANCE_OPTIONS}
+          control={control}
+          error={errors.riskTolerance}
+          required 
+        
+        />
+        <SelectField 
+          name="preferredIndustry"
+          label = "Preferred Industry"
+          placeholder="Select your preferred industry"
+          options = {PREFERRED_INDUSTRIES}
+          control={control}
+          error={errors.preferredIndustry}
+          required 
+        
+        />
         <Button
           type="submit"
           disabled={isSubmitting}
@@ -72,6 +115,11 @@ const SignUpPage = () => {
         >
           {isSubmitting ? "Creating account..." : "Create Account"}
         </Button>
+        <FooterLink
+          text="Already have an account?"
+          linkText="Sign in"
+          href="/sign-in"
+        />
       </form>
     </>
   );

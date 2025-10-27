@@ -14,8 +14,8 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
             height={40}
             className="h-8 w-auto"
           />
-          <div className="pb-6 lg:pb-8 flex-1">{children}</div>
         </Link>
+        <div className="pb-6 lg:pb-8 flex-1">{children}</div>
       </section>
       <section className="auth-right-section">
         <div className="z-10 relative lg:mt-4 lg:mb-16">
