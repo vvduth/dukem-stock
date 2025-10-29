@@ -1,5 +1,6 @@
 import { inngest } from "@/lib/inngest/client";
 import { PERSONALIZED_WELCOME_EMAIL_PROMPT } from "@/lib/inngest/prompt";
+import { sendWelcomeEmail } from "@/lib/nodemailer";
 import { success } from "better-auth";
 import { text } from "stream/consumers";
 
@@ -34,7 +35,13 @@ export const sendSignUpEmail = inngest.createFunction(
         const part = response.candidates?.[0]?.content?.parts?.[0];
         const introText = (part && 'text' in part ? part.text: null) ||  "Welcome to Dukem Stock! We're excited to have you on board.";
 
+        const {data: {
+          email, name
+        }} = event;
         // email sending logic
+        return await sendWelcomeEmail({
+          email, name, intro: introText
+        })
     })
 
     return {

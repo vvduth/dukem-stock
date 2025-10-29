@@ -4,11 +4,15 @@ import FooterLink from "@/components/forms/FooterLink";
 import InputField from "@/components/forms/InputField";
 import SelectField from "@/components/SelectField";
 import { Button } from "@/components/ui/button";
+import { signUpWithEmail } from "@/lib/actions/auth.action";
 import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS } from "@/lib/constants";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const SignUpPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -30,8 +34,17 @@ const SignUpPage = () => {
   const onSubmit = async (data: SignUpFormData) => {
     try {
       console.log("Form Data Submitted: ", data);
+      const result = await signUpWithEmail(data);
+      if (result.success) {
+        router.push("/");
+      }
+
+      // sign up with email
     } catch (error) {
       console.error("Error submitting form data: ", error);
+      toast.error("Sign up failed", {
+        description:  "Please try again later.",
+      });
     }
   };
   return (

@@ -4,7 +4,7 @@ import React from 'react'
 import NavItems from './NavItems'
 import UserDropDown from './UserDropDown'
 
-const Header = () => {
+const Header = ({user}: {user: User}) => {
   return (
     <header className='sticky top-0 header'>
         <div className='container header-wrapper'>
@@ -18,7 +18,7 @@ const Header = () => {
                 <NavItems />    
             </nav>
             {/* use dropdown for mobile */}
-            <UserDropDown />
+            <UserDropDown user={user} />
         </div>
     </header>
   )
