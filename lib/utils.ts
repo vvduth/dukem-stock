@@ -5,6 +5,40 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/**
+ * Transforms Finnhub symbol format to TradingView format
+ * Examples:
+ * - FIA1S.HE -> OMXH:FIA1S (Helsinki)
+ * - AAPL -> NASDAQ:AAPL (US stocks)
+ * - TSLA -> NASDAQ:TSLA
+ */
+export function finnhubToTradingViewSymbol(finnhubSymbol: string): string {
+  // Handle different exchange suffixes
+  const exchangeMap: Record<string, string> = {
+    '.HE': 'OMXH',      // Helsinki
+    '.ST': 'OMXS',      // Stockholm
+    '.CO': 'OMXC',      // Copenhagen
+    '.OL': 'OSE',       // Oslo
+    '.L': 'LSE',        // London
+    '.PA': 'EURONEXT',  // Paris
+    '.DE': 'XETR',      // Frankfurt
+    '.TO': 'TSX',       // Toronto
+    '.AX': 'ASX',       // Australia
+  };
+
+  // Check if symbol has exchange suffix
+  for (const [suffix, exchange] of Object.entries(exchangeMap)) {
+    if (finnhubSymbol.endsWith(suffix)) {
+      const baseSymbol = finnhubSymbol.replace(suffix, '');
+      return `${baseSymbol}`;
+    }
+  }
+
+  // Default: assume US stock, use NASDAQ
+  // You might want to add logic to determine NYSE vs NASDAQ
+  return `${finnhubSymbol}`;
+}
+
 export const formatTimeAgo = (timestamp: number) => {
   const now = Date.now();
   const diffInMs = now - timestamp * 1000; // Convert to milliseconds

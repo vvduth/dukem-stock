@@ -63,7 +63,6 @@ export default function SearchCommand({
   }, []);
 
   const handleSelectStock = () => {
-    console.log(`Selected stock:`);
     setOpen(false);
     setSearchTerm("");
     setStocks(initialStocks);
@@ -109,8 +108,9 @@ export default function SearchCommand({
                 {isSearchMode ? "Search Results" : "Popular Stocks"}(
                 {displayStocks?.length || 0})
               </div>
-              {displayStocks.map((stock, index) => (
-                <li key={stock.symbol} className="search-item">
+              {displayStocks.map((stock, index) => {
+                return (
+                  <li key={stock.symbol} className="search-item">
                   <Link
                     href={`/stocks/${stock.symbol}`}
                     onClick={handleSelectStock}
@@ -125,7 +125,8 @@ export default function SearchCommand({
                     </div>
                   </Link>
                 </li>
-              ))}
+                )
+              })}
             </ul>
           )}
         </CommandList>
