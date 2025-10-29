@@ -177,7 +177,7 @@ export const searchStocks = cache(
           results = response.result || [];
         }
       }
-      console.log("Search results:", results);
+    
       const stocks: StockWithWatchlistStatus[] = results
         .map((result) => ({
           symbol: result.symbol.toUpperCase(),
