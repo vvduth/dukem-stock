@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import { NAV_ITEMS } from '@/lib/constants'
 import { usePathname } from 'next/navigation'
+import SearchCommand from './SearchCommand'
 const NavItems = () => {
 
     const pathName = usePathname();
@@ -14,7 +15,27 @@ const NavItems = () => {
     }
     return (
         <ul className='flex flex-col sm:flex-row p-2 gap-3 sm:gap-10 font-medium'>
-            {NAV_ITEMS.map((item) => (
+            {NAV_ITEMS.map((item) => {
+
+                if (item.label === "Search") {
+                    return (
+                        <li key={"search-trigger"}>
+                            <SearchCommand 
+                                renderAs="text"
+                                label="Search"
+                                initialStocks ={[{
+                                    symbol: "AAPL",
+                                    name: "Apple Inc.",
+                                    exchange: "NASDAQ",
+                                    type: "Common Stock",
+                                    isInWatchlist: false
+                                }]}
+                            />
+                        </li>
+                    )
+                }
+                return (
+                    (
                 <li key={item.href}>
                     <Link href={item.href}
                         className={`hover:text-yellow-500 transition-colors 
@@ -23,7 +44,9 @@ const NavItems = () => {
                         {item.label}
                     </Link>
                 </li>
-            ))}
+            )
+                )
+            })}
         </ul>
     )
 }
