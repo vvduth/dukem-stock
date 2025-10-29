@@ -13,10 +13,12 @@ import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LogOut } from "lucide-react";
 import NavItems from "./NavItems";
+import { signOut } from "@/lib/actions/auth.action";
 const UserDropDown = ({user}: {user: User}) => {
   const router = useRouter();
 
   const handleSignout = async () => {
+    await signOut();
     router.push("/sign-in");
   };
 
