@@ -1,8 +1,8 @@
 import { serve } from "inngest/next";
 import { inngest } from "@/lib/inngest/client";
-import { sendSignUpEmail } from "./functions";
+import { sendSignUpEmail, sendDailyNewsSummary } from "./functions";
 
 export const {GET, POST, PUT} = serve({
     client: inngest,
-    functions: [sendSignUpEmail]
+    functions: [sendSignUpEmail, sendDailyNewsSummary]
 })
